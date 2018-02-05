@@ -17,7 +17,6 @@ namespace SalehAjax.Controllers
 
         [HttpPost]/* we create new action for ajax to fitach each raw in list
         not all list then we make it return to partial view */
-
         public ActionResult _Table(string searchTxt = "", string City = "")
         {
             if (!string.IsNullOrEmpty(searchTxt))//is not null then go in
@@ -27,7 +26,7 @@ namespace SalehAjax.Controllers
                     return PartialView(MyList.myList.Where(x => x.City.ToLower().Contains(searchTxt.ToLower())).OrderBy(x => x.Name));
                 }
                 else //if (City != "city") because I have a default ="" upp 
-                 {
+                {
                     return PartialView(MyList.myList.Where(x => x.Name.ToLower().Contains(searchTxt.ToLower())).OrderBy(x => x.City));
                 }
             }
@@ -67,21 +66,6 @@ namespace SalehAjax.Controllers
             return PartialView("_PartialPerson", person);
         }
 
-        //public ActionResult Search(string src, string City)
-        //{
-        //    Person SrcPerson = new Person();
-        //    if (City == "city")
-        //    {
-        //    }
-        //    return View();
-        //}
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         [HttpGet]
         public ActionResult _Create()
         {
@@ -92,16 +76,13 @@ namespace SalehAjax.Controllers
         public ActionResult _Create(Person newPerson)
         {
             newPerson.Id = MyList.myList.Last().Id + 1;
-
             MyList.myList.Add(newPerson);
-
             return PartialView("_PartialPerson", newPerson);
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-
             Person person = MyList.myList.SingleOrDefault(x => x.Id == id);
             return View(person);
         }
@@ -121,9 +102,7 @@ namespace SalehAjax.Controllers
         public ActionResult Details(int id)
         {
             Person detPerson = new Person();
-
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
-
             return View(detPerson);
         }
 
@@ -131,9 +110,7 @@ namespace SalehAjax.Controllers
         public ActionResult Delete(int id)
         {
             Person detPerson = new Person();
-
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
-
             return View(detPerson);
         }
 
@@ -141,13 +118,9 @@ namespace SalehAjax.Controllers
         public ActionResult ConfirmDelete(int id)
         {
             Person delPerson = new Person();
-
             delPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
-            
             MyList.myList.Remove(delPerson);
             return RedirectToAction("Index");
         }
-
-
     }
 }
