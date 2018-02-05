@@ -1,0 +1,23 @@
+﻿<!--this partial view for action search ajax -->
+@model IEnumerable<SalehAjax.Models.Person>
+
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.Id)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Name)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.City)
+    </th>
+    <th></th>
+</tr>
+
+@foreach (var item in Model)
+{/*I need here now action to bring list of objects from list here then e create
+    new action"PrtialIndex" after finish this loop then we display new filter
+    list by partial view and that pactial method has a view for each part to display
+    in list then we do not have a hall list we have now many part of part list to display  */
+    Html.RenderAction("PrtialIndex", new { id = item.Id });
+}

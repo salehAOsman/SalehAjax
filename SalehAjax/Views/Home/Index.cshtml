@@ -6,7 +6,12 @@
 
 <h2>Index</h2>
 <!--search-->
-@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+@using (Ajax.BeginForm("_Table", "Home", new AjaxOptions {
+
+    UpdateTargetId= "tab",
+    InsertionMode=InsertionMode.Replace,
+    HttpMethod="POST"
+}))
 {
     <div class="form-horizontal">
         <!--start div for begin form-->
@@ -27,12 +32,26 @@
     </div>
 }
 <!--end search-->
+<!--create actionLink-->
+<h3 id="msg"></h3>
+<p id="newCreate">
+    @Ajax.ActionLink("Create New", "_Create", new AjaxOptions {
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+    UpdateTargetId = "newCreate",
+    InsertionMode=InsertionMode.Replace,
+    HttpMethod="GET"
+    })
 </p>
-<table class="table">
+
+<!-- we put id name id="tab" to replace this ajax search 
+    result here we copy this and past in another partial view "_Table"  -->
+<table id="tab" class="table">
+    <thead>
+
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -41,10 +60,16 @@
         </th>
         <th></th>
     </tr>
+    </thead>
+    <tbody id="tabCreate">
 
-@foreach (var item in Model)
-{
+    @foreach (var item in Model)
+    {/*I need here now action to bring list of objects from list here then e create
+    new action"PrtialIndex" after finish this loop then we display new filter 
+    list by partial view and that pactial method has a view for each part to display 
+    in list then we do not have a hall list we have now many part of part list to display  */
     Html.RenderAction("PrtialIndex", new { id = item.Id });
-}
+    }
 
+    </tbody>
 </table>

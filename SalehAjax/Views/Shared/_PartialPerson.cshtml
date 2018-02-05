@@ -1,6 +1,6 @@
 ﻿@model SalehAjax.Models.Person
 
-<tr>
+<tr id="@( "PersonId" + Model.Id )">
     <td>
         @Html.DisplayFor(Model => Model.Id)
     </td>
