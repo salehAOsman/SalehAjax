@@ -14,28 +14,25 @@ namespace SalehAjax.Controllers
         {
             return View(MyList.myList);
         }
-
-        [HttpPost]/* we create new action for ajax to fitach each raw in list
-        not all list then we make it return to partial view */
+        [HttpPost]/* we create new action for ajax to fetch each raw in list not all list then we make it return to partial view */
         public ActionResult _Table(string searchTxt = "", string City = "")
         {
-            if (!string.IsNullOrEmpty(searchTxt))//is not null then go in
+            if (!string.IsNullOrEmpty(searchTxt))               //is not null then go in
             {
                 if (City == "city")
                 {
                     return PartialView(MyList.myList.Where(x => x.City.ToLower().Contains(searchTxt.ToLower())).OrderBy(x => x.Name));
                 }
-                else //if (City != "city") because I have a default ="" upp 
+                else                                            //if (City != "city") because I have a default ="" upp 
                 {
                     return PartialView(MyList.myList.Where(x => x.Name.ToLower().Contains(searchTxt.ToLower())).OrderBy(x => x.City));
                 }
             }
-            else// it is not null, it has another value
+            else                                                           // it is not null, it has another value
             {
-                return PartialView(MyList.myList);//all list with out filtering 
+                return PartialView(MyList.myList);                         //all list with out filtering 
             }
         }
-
         //[HttpPost]
         //public ActionResult Index(string searchTxt = "", string City = "")
         //{
@@ -56,22 +53,19 @@ namespace SalehAjax.Controllers
         //    }
         //    return View("Index");
         //}
-
         /*[HttpGet] we use this method as assistant to baind with RenderAction to display list of search
          *to fix problem in searching method no need to strict this method as get or post because index method use partialindex by to way get and post*/
-
+        
         public ActionResult PrtialIndex(int id)
         {
             Person person = MyList.myList.SingleOrDefault(p => p.Id == id);
             return PartialView("_PartialPerson", person);
         }
-
         [HttpGet]
         public ActionResult _Create()
         {
             return PartialView();
         }
-
         [HttpPost]
         public ActionResult _Create(Person newPerson)
         {
@@ -79,24 +73,42 @@ namespace SalehAjax.Controllers
             MyList.myList.Add(newPerson);
             return PartialView("_PartialPerson", newPerson);
         }
+        //[HttpGet]
+        //public ActionResult Edit(int id)
+        //{
+        //    Person person = MyList.myList.SingleOrDefault(x => x.Id == id);
+        //    return View(person);
+        //}
+        //[HttpPost]
+        //public ActionResult Edit(Person editPerson)
+        //{
+        //    Person oldPerson = new Person();
+        //    oldPerson = MyList.myList.SingleOrDefault(o => o.Id == editPerson.Id);
+        //    oldPerson.Name = editPerson.Name;
+        //    oldPerson.City = editPerson.City;
+        //    //MyList.myList.Add(editPerson);
+        //    return RedirectToAction("Index");
+        //}
 
+
+        //with Ajax _Edit
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult _Edit(int id)
         {
             Person person = MyList.myList.SingleOrDefault(x => x.Id == id);
-            return View(person);
+            return PartialView(person);
         }
-       
         [HttpPost]
-        public ActionResult Edit(Person editPerson)
+        public ActionResult _Edit(Person editPerson)
         {
             Person oldPerson = new Person();
             oldPerson = MyList.myList.SingleOrDefault(o => o.Id == editPerson.Id);
             oldPerson.Name = editPerson.Name;
             oldPerson.City = editPerson.City;
             //MyList.myList.Add(editPerson);
-            return RedirectToAction("Index");
+            return PartialView("_PartialPerson", oldPerson);//return partial person it is default 
         }
+        //End with Ajax _Edit
 
         [HttpGet]
         public ActionResult Details(int id)
@@ -105,22 +117,49 @@ namespace SalehAjax.Controllers
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
             return View(detPerson);
         }
-
+        //Ajax Details
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult _Details(int id)
         {
             Person detPerson = new Person();
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
-            return View(detPerson);
+            return PartialView( detPerson);
         }
+        //End Ajax Details
 
+        //[HttpGet]
+        //public ActionResult Delete(int id)
+        //{
+        //    Person detPerson = new Person();
+        //    detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
+        //    return View(detPerson);
+        //}
+        //[HttpPost]
+        //public ActionResult ConfirmDelete(int id)
+        //{
+        //    Person delPerson = new Person();
+        //    delPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
+        //    MyList.myList.Remove(delPerson);
+        //    return RedirectToAction("Index");
+        //}
+        //Ajax _Delete
+        [HttpGet]
+        public ActionResult _Delete(int id)
+        {
+            Person detPerson = new Person();
+            detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
+            return PartialView(detPerson);
+        }
         [HttpPost]
-        public ActionResult ConfirmDelete(int id)
+        public ActionResult _ConfirmDelete(int id)
         {
             Person delPerson = new Person();
             delPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
             MyList.myList.Remove(delPerson);
-            return RedirectToAction("Index");
+            return Content("");//we will not return object just return empty 
         }
+        //End Ajax _Delete
+
+
     }
 }

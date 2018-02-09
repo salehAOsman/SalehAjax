@@ -13,38 +13,39 @@
             <input type="submit" value="Search" class="btn btn-default" />
     } -->
 <!---->
-@using(Ajax.BeginForm("_Table", "Home", new AjaxOptions {
-
-UpdateTargetId = "tab",
-InsertionMode = InsertionMode.Replace,
-HttpMethod = "POST"
+@using (Ajax.BeginForm("_Table", "Home", new AjaxOptions
+{
+    UpdateTargetId = "tab",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
 }))
 {
-<div class="form-horizontal">
-    <!--start div for begin form-->
-    @Html.ValidationSummary(true, " ", new { @class = "text-danger" })<!--This used for validation but we need for each element-->
-    <div class="form-group">
-        <!-- property -->
-        <div class="col-md-3 ">
-            <!--it must be name of input same input in method post "name="searchTxt" "-->
-            <input type="text" name="searchTxt" value="" placeholder="input seraching" />        @*It relates this single validation with validationSummary*@
-        </div>
-        <div class="col-md-4">
-            <!-- It needs "name="****" " of input element to compare this value in the method
-                we use property to be by default checked -->
-            <span>by City</span><input type="checkbox" name="City" value="city" class="btn btn-default" checked />
-            <input type="submit" value="Search" class="btn btn-default" />
+    <div class="form-horizontal">
+        <!--start div for begin form-->
+        @Html.ValidationSummary(true, " ", new { @class = "text-danger" })<!--This used for validation but we need for each element-->
+        <div class="form-group">
+            <!-- property -->
+            <div class="col-md-3 ">
+                <!--it must be name of input same input in method post "name="searchTxt" "-->
+                <input type="text" name="searchTxt" value="" placeholder="input seraching" />        @*It relates this single validation with validationSummary*@
+            </div>
+            <div class="col-md-4">
+                <!-- It needs "name="****" " of input element to compare this value in the method
+                    we use property to be by default checked -->
+                <span>by City</span><input type="checkbox" name="City" value="city" class="btn btn-default" checked />
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
 <!--end search-->
 <!--create actionLink-->
 <h3 id="msg"></h3>
+
 <p id="newCreate">
     @Ajax.ActionLink("Create New", "_Create", new AjaxOptions
     {
-        UpdateTargetId = "newCreate",
+        UpdateTargetId = "newCreate",//it will replace the same <p> up id="newCreate"
         InsertionMode = InsertionMode.Replace,
         HttpMethod = "GET"
     })
@@ -66,7 +67,7 @@ HttpMethod = "POST"
             <th></th>
         </tr>
     </thead>
-    <tbody id="tabCreate">
+    <tbody id="tabCreate"><!--replace for _Create new person-->
         @foreach (var item in Model)
         {/*I need here now action to bring list of objects from list here then e create
 new action"PrtialIndex" after finish this loop then we display new filter
@@ -76,3 +77,4 @@ in list then we do not have a hall list we have now many part of part list to di
         }
     </tbody>
 </table>
+

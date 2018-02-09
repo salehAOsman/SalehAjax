@@ -1,0 +1,49 @@
+﻿@model SalehAjax.Models.Person
+<td>
+
+    @{
+        ViewBag.Title = "Details";
+    }
+
+    <h2>Details</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+
+        </dl>
+    </div>
+    
+       
+            @Ajax.ActionLink("Edit", "_Edit", new { id = Model.Id }, new AjaxOptions
+        {
+            UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "GET"
+        })
+       
+    <a>
+        | @Ajax.ActionLink("Cancel", "PrtialIndex", new { id = Model.Id }, new AjaxOptions
+    {
+        UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
+        InsertionMode = InsertionMode.ReplaceWith,
+        HttpMethod = "GET"
+    })
+    </a>
+    
+</td>

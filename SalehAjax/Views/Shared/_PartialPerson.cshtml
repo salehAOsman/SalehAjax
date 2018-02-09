@@ -1,18 +1,40 @@
 ﻿@model SalehAjax.Models.Person
+        
+<tr class="row" id="@( "PersonId" + Model.Id )">  <!-- id = PersonId to change from here -->
+    <td >@Html.DisplayFor(Model => Model.Id)</td>
+    <td> @Html.DisplayFor(Model => Model.Name)</td>
+    <td>@Html.DisplayFor(Model => Model.City) </td>
+    
+    <td>
+        <!--_Edit Ajax-->
+        @Ajax.ActionLink("Edit", "_Edit", new { id = Model.Id },
+              new AjaxOptions
+              {
+                  InsertionMode = InsertionMode.Replace,
+                  UpdateTargetId = $"PersonId" + Model.Id
+              },
+              new { @class = "btn btn-success" })|
+        <!--End _Edit Ajax-->
+        <!--_Details Ajax-->
+        @Ajax.ActionLink("Details", "_Details", new { id = Model.Id },
+              new AjaxOptions
+              {
+                  InsertionMode = InsertionMode.Replace,
+                  UpdateTargetId = $"PersonId" + Model.Id
+              },
+              new { @class = "btn btn-info" })|
+        <!--End _Details Ajax-->
+        <!--_Delete Ajax-->
+        @Ajax.ActionLink("Delete", "_Delete", new { id = Model.Id },
+              new AjaxOptions
+              {
+                  InsertionMode = InsertionMode.Replace, //it has to use Replace not ReplaceWith
+                  UpdateTargetId = $"PersonId" + Model.Id
+              },
+              new { @class = "btn btn-danger" })
+        <!--End _Delete Ajax-->
 
-<tr id="@( "PersonId" + Model.Id )">
-    <td>
-        @Html.DisplayFor(Model => Model.Id)
-    </td>
-    <td>
-        @Html.DisplayFor(Model => Model.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(Model => Model.City)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = Model.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        @*@Html.ActionLink("Details", "Details", new { id = Model.Id })|*@
+        @*@Html.ActionLink("Delete", "Delete", new { id = Model.Id })*@
     </td>
 </tr>
