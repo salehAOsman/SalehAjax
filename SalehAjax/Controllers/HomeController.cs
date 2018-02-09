@@ -15,6 +15,7 @@ namespace SalehAjax.Controllers
             return View(MyList.myList);
         }
         [HttpPost]/* we create new action for ajax to fetch each raw in list not all list then we make it return to partial view */
+        [ValidateAntiForgeryToken()]
         public ActionResult _Table(string searchTxt = "", string City = "")
         {
             if (!string.IsNullOrEmpty(searchTxt))               //is not null then go in
@@ -55,6 +56,7 @@ namespace SalehAjax.Controllers
         //}
         /*[HttpGet] we use this method as assistant to baind with RenderAction to display list of search
          *to fix problem in searching method no need to strict this method as get or post because index method use partialindex by to way get and post*/
+
         
         public ActionResult PrtialIndex(int id)
         {
@@ -67,12 +69,19 @@ namespace SalehAjax.Controllers
             return PartialView();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult _Create(Person newPerson)
         {
             newPerson.Id = MyList.myList.Last().Id + 1;
             MyList.myList.Add(newPerson);
             return PartialView("_PartialPerson", newPerson);
         }
+
+        [HttpGet]//to hide create view
+        public void _HideCreate() { ; }
+
+
+
         //[HttpGet]
         //public ActionResult Edit(int id)
         //{
@@ -99,6 +108,7 @@ namespace SalehAjax.Controllers
             return PartialView(person);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult _Edit(Person editPerson)
         {
             Person oldPerson = new Person();

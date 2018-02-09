@@ -8,7 +8,7 @@
         HttpMethod = "POST"
     }))
     {
-        @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()//it gives token code that value will be in server side to check if this value has this token code or not to avoid hacking between server and client 
 
         <div class="form-horizontal">
             <h4>Edit Person</h4>

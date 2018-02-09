@@ -1,12 +1,9 @@
 ﻿@model SalehAjax.Models.Person
 <td>
-
     @{
         ViewBag.Title = "Details";
     }
-
     <h2>Details</h2>
-
     <div>
         <hr />
         <dl class="dl-horizontal">
@@ -28,22 +25,47 @@
 
         </dl>
     </div>
+    <!--if i need to change from ActionLink to BeginForm to use button istead of Link then I have to change as it is down -->
     
-       
-            @Ajax.ActionLink("Edit", "_Edit", new { id = Model.Id }, new AjaxOptions
-        {
-            UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "GET"
-        })
-       
-    <a>
-        | @Ajax.ActionLink("Cancel", "PrtialIndex", new { id = Model.Id }, new AjaxOptions
+    @*<div class="form-group">
+    @Ajax.ActionLink("Edit", "_Edit", new { id = Model.Id }, new AjaxOptions
     {
         UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
-        InsertionMode = InsertionMode.ReplaceWith,
+        InsertionMode = InsertionMode.Replace,
         HttpMethod = "GET"
     })
-    </a>
+        <a>
+            |@Ajax.ActionLink("Cancel", "PrtialIndex", new { id = Model.Id }, new AjaxOptions
+            {
+                UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
+                InsertionMode = InsertionMode.ReplaceWith,//replace with because we need to replace all info
+                HttpMethod = "GET"
+            })
+        </a>
+    </div>*@
     
+
+    @using (Ajax.BeginForm("_Edit", "Home", new { id = Model.Id }, new AjaxOptions
+    {
+        UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <!--confirm delete we resend the id as input by ConfirmDelete method-->
+            <input type="submit" value="Edit" class="btn btn-success" />|
+            <!--Back To List-->
+            <a>
+
+                @Ajax.ActionLink("Cancel", "PrtialIndex", new { id = Model.Id }, new AjaxOptions
+                {
+                    UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
+                    InsertionMode = InsertionMode.ReplaceWith,//replace with because we need to replace all info
+                    HttpMethod = "GET"
+                })
+            </a>
+        </div>
+    }
 </td>
