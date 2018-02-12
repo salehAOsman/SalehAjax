@@ -56,32 +56,39 @@ namespace SalehAjax.Controllers
         //}
         /*[HttpGet] we use this method as assistant to baind with RenderAction to display list of search
          *to fix problem in searching method no need to strict this method as get or post because index method use partialindex by to way get and post*/
-
-        
+         
         public ActionResult PrtialIndex(int id)
         {
             Person person = MyList.myList.SingleOrDefault(p => p.Id == id);
             return PartialView("_PartialPerson", person);
         }
+
         [HttpGet]
         public ActionResult _Create()
         {
             return PartialView();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult _Create(Person newPerson)
         {
+            if (ModelState.IsValid)                 
+            {
             newPerson.Id = MyList.myList.Last().Id + 1;
             MyList.myList.Add(newPerson);
             return PartialView("_PartialPerson", newPerson);
+            }
+            else
+                return new HttpStatusCodeResult(400);
         }
 
         [HttpGet]//to hide create view
-        public void _HideCreate() { ; }
-
-
-
+        public ActionResult _HideCreate()
+        {
+            return PartialView();
+        }
+        
         //[HttpGet]
         //public ActionResult Edit(int id)
         //{
@@ -98,9 +105,8 @@ namespace SalehAjax.Controllers
         //    //MyList.myList.Add(editPerson);
         //    return RedirectToAction("Index");
         //}
-
-
         //with Ajax _Edit
+
         [HttpGet]
         public ActionResult _Edit(int id)
         {

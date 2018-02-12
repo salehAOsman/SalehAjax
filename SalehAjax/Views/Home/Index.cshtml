@@ -12,6 +12,7 @@
             <a>by City</a><input type="checkbox" name="City" value="city" class="btn btn-default" checked />
             <input type="submit" value="Search" class="btn btn-default" />
     } -->
+
 <!---->
 @using (Ajax.BeginForm("_Table", "Home", new AjaxOptions
 {
@@ -42,21 +43,15 @@
 <!--create actionLink-->
 <h3 id="msg"></h3>
 <!--?????? how can if fix this problem for hiding create ActionLink -->
+
 <p id="newCreate">
-    @Ajax.ActionLink("Create New", "_Create", new AjaxOptions
-    {
-        UpdateTargetId = "newCreate",//it will replace the same <p> up id="newCreate"
-        InsertionMode = InsertionMode.Replace,
-        HttpMethod = "GET"
-    })
-<a id="newCreate">
-    @Ajax.ActionLink("Back To List", "_HideCreate", new AjaxOptions
+    @Ajax.ActionLink("Create New", "_Create",new AjaxOptions
 {
     UpdateTargetId = "newCreate",//it will replace the same <p> up id="newCreate"
-                                 //InsertionMode = InsertionMode.Replace,
+    InsertionMode = InsertionMode.Replace,
     HttpMethod = "GET"
 })
-</a>
+
 </p>
 
 <!-- we put id name id="tab" to replace this ajax search

@@ -12,6 +12,7 @@
 
 <div class="form-horizontal">
     <h4>Creat Person</h4>
+    
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -32,19 +33,17 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
+            <input type="reset" value="Reset" class="btn btn-default" />
+    <a>
+        @Ajax.ActionLink("Cancel", "_HideCreate", new AjaxOptions
+        {
+            UpdateTargetId = "newCreate",//it will replace the same <p> up id="newCreate"
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "GET"
+        })
+    </a>
         </div>
     </div>
-
-    <a>
-
-        @*@Ajax.ActionLink("Back List", "Index", new { id = Model.Id }, new AjaxOptions
-        {
-            UpdateTargetId = "PersonId" + Model.Id,//it will replace the same <p> up id="newCreate"
-            InsertionMode = InsertionMode.Replace,//replace with because we need to replace all info
-            HttpMethod = "POST"
-        })*@
-    </a>
-
 
 
 </div>
