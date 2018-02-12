@@ -4,15 +4,15 @@
 {
     UpdateTargetId = "tabCreate",
     InsertionMode = InsertionMode.InsertAfter,
+    OnFailure = $"$('#msg').text('Please, create valid values ')",
     OnSuccess = $"$('#msg').text('Create Success ')", //we write here js and jQuery select id=msg display "Success" 
     HttpMethod = "POST"
- }))
+}))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <h4>Creat Person</h4>
-    
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -22,7 +22,6 @@
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

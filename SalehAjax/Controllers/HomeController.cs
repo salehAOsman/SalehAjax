@@ -15,7 +15,7 @@ namespace SalehAjax.Controllers
             return View(MyList.myList);
         }
         [HttpPost]/* we create new action for ajax to fetch each raw in list not all list then we make it return to partial view */
-        [ValidateAntiForgeryToken()]
+        //[ValidateAntiForgeryToken()]
         public ActionResult _Table(string searchTxt = "", string City = "")
         {
             if (!string.IsNullOrEmpty(searchTxt))               //is not null then go in
@@ -73,9 +73,9 @@ namespace SalehAjax.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult _Create(Person newPerson)
         {
-            if (ModelState.IsValid)                 
+            if (ModelState.IsValid)
             {
-            newPerson.Id = MyList.myList.Last().Id + 1;
+                newPerson.Id = MyList.myList.Last().Id + 1;
             MyList.myList.Add(newPerson);
             return PartialView("_PartialPerson", newPerson);
             }
@@ -117,12 +117,19 @@ namespace SalehAjax.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult _Edit(Person editPerson)
         {
-            Person oldPerson = new Person();
-            oldPerson = MyList.myList.SingleOrDefault(o => o.Id == editPerson.Id);
-            oldPerson.Name = editPerson.Name;
-            oldPerson.City = editPerson.City;
-            //MyList.myList.Add(editPerson);
-            return PartialView("_PartialPerson", oldPerson);//return partial person it is default 
+            if (ModelState.IsValid)
+            {
+                Person oldPerson = new Person();
+                oldPerson = MyList.myList.SingleOrDefault(o => o.Id == editPerson.Id);
+                oldPerson.Name = editPerson.Name;
+                oldPerson.City = editPerson.City;
+                //MyList.myList.Add(editPerson);
+                return PartialView("_PartialPerson", oldPerson);//return partial person it is default 
+            }
+            else
+            {
+                return new HttpStatusCodeResult(406);//406: Not Acceptable go display sentence in OnFailure
+            }
         }
         //End with Ajax _Edit
 
@@ -141,6 +148,7 @@ namespace SalehAjax.Controllers
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
             return PartialView( detPerson);
         }
+
         //End Ajax Details
 
         //[HttpGet]
@@ -159,6 +167,7 @@ namespace SalehAjax.Controllers
         //    return RedirectToAction("Index");
         //}
         //Ajax _Delete
+
         [HttpGet]
         public ActionResult _Delete(int id)
         {
@@ -166,6 +175,7 @@ namespace SalehAjax.Controllers
             detPerson = MyList.myList.SingleOrDefault(x => x.Id == id);
             return PartialView(detPerson);
         }
+
         [HttpPost]
         public ActionResult _ConfirmDelete(int id)
         {

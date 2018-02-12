@@ -20,6 +20,7 @@
         UpdateTargetId = $"PersonId" + Model.Id,//"tabCreate"
         InsertionMode = InsertionMode.ReplaceWith, //replace with because we need to replace all info 
         OnSuccess = $"$('#msg').text('Delete Success ')", //we write here js and jQuery select id=msg display "Success"
+
         HttpMethod = "POST"
     }))
     {

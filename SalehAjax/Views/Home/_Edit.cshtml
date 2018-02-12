@@ -4,6 +4,7 @@
     {
         UpdateTargetId = $"PersonId" + Model.Id,//"tabCreate"
         InsertionMode = InsertionMode.ReplaceWith,
+        OnFailure= $"$('#msg').text('Please,try with no empty values')",
         OnSuccess = $"$('#msg').text('Edit Success ')", //we write here js and jQuery select id=msg display "Success"
         HttpMethod = "POST"
     }))
